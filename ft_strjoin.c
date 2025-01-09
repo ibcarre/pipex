@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_pipex.h"
+#include "pipex.h"
 
 static int	ft_strlen(char *str)
 {

@@ -30,5 +30,7 @@ int	handle_err(int errno)
 		return (write(2, "PIPE ERROR\n", 11), errno);
 	if (errno == 5)
 		return (write(2, "FORK ERROR\n", 11), errno);
+	if (errno == 6)
+		return (perror("WRONG COMMAND "), errno); 
 	return (errno);
 }
