@@ -18,11 +18,11 @@ int	child_in(int in, int pipeEnds[2], char *env[], char **argc)
 	char	**cmd;
 
 	if (dup2(in, 0) == -1)
-		return (perror("DUP FAILED"), -1);
+		return (close(in), perror("DUP FAILED A"), -1);
 	close(in);
 	close(pipeEnds[0]);
 	if (dup2(pipeEnds[1], 1) == -1)
-		return (perror("DUP FAILED"), -1);
+		return (close(pipeEnds[1]), perror("DUP FAILED B"), -1);
 	close(pipeEnds[1]);
 	cmd = ft_split(argc[0], ' ');
 	if (!cmd)
@@ -44,10 +44,10 @@ int	child_out(int out, int pipeEnds[2], char *env[], char **argc)
 
 	close(pipeEnds[1]);
 	if (dup2(pipeEnds[0], 0) == -1)
-		return (perror("DUP FAILED"), -1);
+		return (close(out), close(pipeEnds[0]), perror("DUP FAILED C"), -1);
 	close(pipeEnds[0]);
 	if (dup2(out, 1) == -1)
-		return (perror("DUP FAILED"), -1);
+		return (close(out), perror("DUP FAILED D"), -1);
 	close(out);
 	cmd = ft_split(argc[1], ' ');
 	if (!cmd)
@@ -66,6 +66,7 @@ int	pipex(int in, int out, char **argc, char *env[])
 {
 	int	pipeends[2];
 	int	childo;
+	int	childt;
 	int	status;
 
 	if (pipe(pipeends) == -1)
@@ -74,21 +75,31 @@ int	pipex(int in, int out, char **argc, char *env[])
 	if (childo == 0)
 	{
 		close(out);
-		if (child_in(in, pipeends, env, argc) == -1)
+		/*if (child_in(in, pipeends, env, argc) == -1)
 			exit(-1);
-		exit(0);
+		exit(0);*/
+		exit(child_in(in, pipeends, env, argc));
 	}
 	else if (childo == -1)
 		return (close(in), close(out), handle_err(5));
-	else
+	childt = fork();
+	if (childt == 0)
 	{
 		close(in);
-		waitpid(childo, &status, 0);
-		if (child_out(out, pipeends, env, argc) == -1)
-			return (close(1), -1);
-		return (0);
+		/*if (child_out(out, pipeends, env, argc) == -1)
+			exit(-1);
+		exit(0);*/
+		exit(child_out(out, pipeends, env, argc));
 	}
-	return (0);
+	else if (childt == -1)
+		return (close(in), close(out), handle_err(5));
+	close(out);
+	close(in);
+	close(pipeends[0]);
+	close(pipeends[1]);
+	waitpid(childo, &status, 0);
+	waitpid(childt, &status, 0);
+	return (status);
 }
 
 int	main(int argv, char **argc, char *env[])
@@ -101,7 +112,7 @@ int	main(int argv, char **argc, char *env[])
 	in_fd = open(argc[1], O_RDONLY);
 	if (in_fd < 0)
 		return (handle_err(2));
-	out_fd = open(argc[argv - 1], O_CREAT | O_WRONLY | O_TRUNC, 0777);
+	out_fd = open(argc[argv - 1], O_CREAT | O_WRONLY | O_TRUNC, 0644);
 	argc[argv - 1] = 0;
 	argc[3] = argc[argv - 2];
 	if (out_fd < 0)

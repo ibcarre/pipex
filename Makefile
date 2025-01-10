@@ -21,10 +21,10 @@ SRC = ./pipex.c\
 
 OBJ = $(SRC:.c=.o)
 
-FLAGS += -Werror -Wextra -Wall -I $(INC)
+FLAGS += -Werror -Wextra -Wall -I $(INC) -g
 
 $(NAME): $(OBJ)
-	cc $(OBJ) -o $(NAME) $(FLAGS) -g
+	cc $(OBJ) -o $(NAME) $(FLAGS)
 
 all: $(NAME)
 
