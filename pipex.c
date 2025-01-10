@@ -17,11 +17,11 @@ int	child_in(int in, int pipeEnds[2], char *env[], char **argc)
 	char	*path;
 	char	**cmd;
 
-	if (dup2(in, 0) == -1)
+	if (dup2(in, STDIN_FILENO) == -1)
 		return (close(in), perror("DUP FAILED A"), -1);
 	close(in);
 	close(pipeEnds[0]);
-	if (dup2(pipeEnds[1], 1) == -1)
+	if (dup2(pipeEnds[1], STDOUT_FILENO) == -1)
 		return (close(pipeEnds[1]), perror("DUP FAILED B"), -1);
 	close(pipeEnds[1]);
 	cmd = ft_split(argc[0], ' ');
@@ -43,10 +43,10 @@ int	child_out(int out, int pipeEnds[2], char *env[], char **argc)
 	char	**cmd;
 
 	close(pipeEnds[1]);
-	if (dup2(pipeEnds[0], 0) == -1)
+	if (dup2(pipeEnds[0], STDIN_FILENO) == -1)
 		return (close(out), close(pipeEnds[0]), perror("DUP FAILED C"), -1);
 	close(pipeEnds[0]);
-	if (dup2(out, 1) == -1)
+	if (dup2(out, STDOUT_FILENO) == -1)
 		return (close(out), perror("DUP FAILED D"), -1);
 	close(out);
 	cmd = ft_split(argc[1], ' ');

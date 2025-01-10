@@ -24,6 +24,11 @@ int	ft_find(char *str, char *tofind)
 	return (0);
 }
 
+int	pipex(int in, int out, char **argc, char env[])
+{
+	
+}
+
 int	main(int argv, char **argc, char *env[])
 {
 	int	in_fd;
