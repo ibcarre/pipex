@@ -32,7 +32,7 @@ static int	count_words(char *str, char sep)
 	return (count);
 }
 
-static void	ft_free(char **res, int i)
+static void	ft_frees(char **res, int i)
 {
 	i--;
 	while (i >= 0)
@@ -70,7 +70,7 @@ static char	**ft_mal(char **res, char *str, char sep)
 		{
 			res[count] = malloc(j + 1);
 			if (!res[count])
-				ft_free(res, count);
+				ft_frees(res, count);
 			res[count][j] = 0;
 		}
 		j = 0;

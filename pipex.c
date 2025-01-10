@@ -12,67 +12,12 @@
 
 #include "pipex.h"
 
-char	**ft_getpath(char *env[])
-{
-	int	i;
-	int	j;
-	char	*str;
-
-	i = 0;
-	j = 0;
-	str = "PATH";
-	while (env[i])
-	{
-		while (env[i][j] == str[j])
-		{
-			j++;
-			if (j == 4)
-				return (ft_split(&env[i][4], ':'));
-		}
-		i++;
-		j = 0;
-	}
-	return (NULL);
-}
-
-void	ft_free(char **lst)
-{
-	int	i;
-
-	i = 0;
-	while (lst[i])
-	{
-		free(lst[i]);
-		i++;
-	}
-	free(lst);
-}
-
-char	*findpath(char *cmd, char *env[])
-{
-	char	**paths;
-	int	i;
-	char	*path;
-
-	paths = ft_getpath(env);
-	i = 0;
-	while (paths[i])
-	{
-		path = ft_strjoin(ft_strjoin(paths[i], "/"), cmd);
-		if (access(path, F_OK) == 0)
-			return (ft_free(paths), path);
-		free(path);
-		i++;
-	}
-	return (ft_free(paths), NULL);
-}
-
 int	child_in(int in, int pipeEnds[2], char *env[], char **argc)
 {
 	char	*path;
 	char	**cmd;
 
-	if (dup2(in, 0) == - 1)
+	if (dup2(in, 0) == -1)
 		return (perror("DUP FAILED"), -1);
 	close(in);
 	close(pipeEnds[0]);
@@ -81,7 +26,7 @@ int	child_in(int in, int pipeEnds[2], char *env[], char **argc)
 	close(pipeEnds[1]);
 	cmd = ft_split(argc[0], ' ');
 	if (!cmd)
-		return (free(path), handle_err(6), -1);
+		return (handle_err(6), -1);
 	path = findpath(cmd[0], env);
 	if (!path)
 		return (handle_err(6), -1);
@@ -119,31 +64,30 @@ int	child_out(int out, int pipeEnds[2], char *env[], char **argc)
 
 int	pipex(int in, int out, char **argc, char *env[])
 {
-	int	pipeEnds[2];
-	int	childO;
+	int	pipeends[2];
+	int	childo;
 	int	status;
-	int	child;
 
-	if (pipe(pipeEnds) == -1)
+	if (pipe(pipeends) == -1)
 		return (close(in), close(out), handle_err(4));
-	childO = fork();
-	if (childO == 0)
+	childo = fork();
+	if (childo == 0)
 	{
-		if (child_in(in, pipeEnds, env, argc) == -1)
+		close(out);
+		if (child_in(in, pipeends, env, argc) == -1)
 			exit(-1);
 		exit(0);
 	}
-	else if (childO == -1)
+	else if (childo == -1)
 		return (close(in), close(out), handle_err(5));
-	child = fork();
-	if (child == 0)
+	else
 	{
-		if(child_out(out, pipeEnds, env, argc) == -1)
-			exit(-1);
-		exit(0);
+		close(in);
+		waitpid(childo, &status, 0);
+		if (child_out(out, pipeends, env, argc) == -1)
+			return (close(1), -1);
+		return (0);
 	}
-	else if (child == -1)
-		return (close(in), close(out), handle_err(5));
 	return (0);
 }
 

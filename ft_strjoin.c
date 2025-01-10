@@ -25,9 +25,9 @@ static int	ft_strlen(char *str)
 char	*ft_strjoin(char *str, char *str2)
 {
 	char	*str3;
-	int	len;
-	int	i;
-	int	j;
+	int		len;
+	int		i;
+	int		j;
 
 	i = 0;
 	j = 0;

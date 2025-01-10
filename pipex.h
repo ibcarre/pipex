@@ -10,8 +10,8 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef FT_PIPEX_H
-# define FT_PIPEX_H
+#ifndef PIPEX_H
+# define PIPEX_H
 
 # include <fcntl.h>
 # include <string.h>
@@ -22,7 +22,9 @@
 
 char	**ft_split(char *str, char sep);
 char	*ft_strjoin(char *str, char *str2);
-int		ft_pipex(int in_fd, int out_fd, char **argc,  char *envp[]);
+int		ft_pipex(int in_fd, int out_fd, char **argc, char *envp[]);
 int		handle_err(int err);
+void	ft_free(char **str);
+char	*findpath(char *cmd, char *env[]);
 
 #endif
