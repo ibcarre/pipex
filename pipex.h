@@ -22,7 +22,6 @@
 
 char	**ft_split(char *str, char sep);
 char	*ft_strjoin(char *str, char *str2);
-int		ft_pipex(int in_fd, int out_fd, char **argc, char *envp[]);
 int		handle_err(int err);
 void	ft_free(char **str);
 char	*findpath(char *cmd, char *env[]);

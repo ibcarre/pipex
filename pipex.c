@@ -62,6 +62,14 @@ int	child_out(int out, int pipeEnds[2], char *env[], char **argc)
 	return (-1);
 }
 
+void	ft_close(int pipeends[2], int in, int out)
+{
+	close(pipeends[0]);
+	close(pipeends[1]);
+	close(in);
+	close(out);
+}
+
 int	pipex(int in, int out, char **argc, char *env[])
 {
 	int	pipeends[2];
@@ -75,9 +83,6 @@ int	pipex(int in, int out, char **argc, char *env[])
 	if (childo == 0)
 	{
 		close(out);
-		/*if (child_in(in, pipeends, env, argc) == -1)
-			exit(-1);
-		exit(0);*/
 		exit(child_in(in, pipeends, env, argc));
 	}
 	else if (childo == -1)
@@ -86,20 +91,12 @@ int	pipex(int in, int out, char **argc, char *env[])
 	if (childt == 0)
 	{
 		close(in);
-		/*if (child_out(out, pipeends, env, argc) == -1)
-			exit(-1);
-		exit(0);*/
 		exit(child_out(out, pipeends, env, argc));
 	}
 	else if (childt == -1)
 		return (close(in), close(out), handle_err(5));
-	close(out);
-	close(in);
-	close(pipeends[0]);
-	close(pipeends[1]);
-	waitpid(childo, &status, 0);
-	waitpid(childt, &status, 0);
-	return (status);
+	ft_close(pipeends, in, out);
+	return (waitpid(childo, &status, 0), waitpid(childt, &status, 0), status);
 }
 
 int	main(int argv, char **argc, char *env[])
