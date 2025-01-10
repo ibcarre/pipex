@@ -111,7 +111,6 @@ int	main(int argv, char **argc, char *env[])
 		return (handle_err(2));
 	out_fd = open(argc[argv - 1], O_CREAT | O_WRONLY | O_TRUNC, 0644);
 	argc[argv - 1] = 0;
-	argc[3] = argc[argv - 2];
 	if (out_fd < 0)
 		return (close(in_fd), handle_err(2));
 	return (pipex(in_fd, out_fd, &argc[2], env));
