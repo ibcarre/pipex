@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pipex.h                                            :+:      :+:    :+:   */
+/*   pipex_b.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ibaaziz <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/27 16:34:28 by ibaaziz           #+#    #+#             */
-/*   Updated: 2025/01/08 13:30:31 by ibaaziz          ###   ########.fr       */
+/*   Updated: 2025/01/11 22:21:32 by ibaaziz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,5 +25,6 @@ char	*ft_strjoin(char *str, char *str2);
 int		handle_err(int err);
 void	ft_free(char **str);
 char	*findpath(char *cmd, char *env[]);
+char	*get_next_line(int fd);
 
 #endif

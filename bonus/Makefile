@@ -6,7 +6,7 @@
 #    By: ibaaziz <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/01/04 11:17:37 by ibaaziz           #+#    #+#              #
-#    Updated: 2025/01/04 11:17:40 by ibaaziz          ###   ########.fr        #
+#    Updated: 2025/01/11 22:20:50 by ibaaziz          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,7 +17,9 @@ INC = pipex_b.h\
 SRC = ./pipex_b.c\
 	./ft_split.c\
 	./ft_strjoin.c\
-	./pipex_utils.c
+	./pipex_utils.c\
+	./get_next_line.c\
+	./get_next_line_utils.c\
 
 OBJ = $(SRC:.c=.o)
 
