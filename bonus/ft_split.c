@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   ft_split.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ibaaziz <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: ibaaziz <ibaaziz@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/31 14:02:48 by ibaaziz           #+#    #+#             */
-/*   Updated: 2024/12/31 14:20:09 by ibaaziz          ###   ########.fr       */
+/*   Updated: 2025/01/11 19:51:50 by ibaaziz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "pipex.h"
+#include "pipex_b.h"
 
 static int	count_words(char *str, char sep)
 {

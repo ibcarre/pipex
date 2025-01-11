@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipex.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ibaaziz <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: ibaaziz <ibaaziz@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/08 12:21:05 by ibaaziz           #+#    #+#             */
-/*   Updated: 2025/01/08 18:49:46 by ibaaziz          ###   ########.fr       */
+/*   Updated: 2025/01/11 19:29:25 by ibaaziz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,7 @@ int	pipex(int in, int out, char **argc, char *env[])
 		exit(child_in(in, pipeends, env, argc));
 	}
 	else if (childo == -1)
-		return (close(in), close(out), handle_err(5));
+		return (ft_close(pipeends, in, out), handle_err(5));
 	childt = fork();
 	if (childt == 0)
 	{
@@ -94,7 +94,7 @@ int	pipex(int in, int out, char **argc, char *env[])
 		exit(child_out(out, pipeends, env, argc));
 	}
 	else if (childt == -1)
-		return (close(in), close(out), handle_err(5));
+		return (ft_close(pipeends, in, out), handle_err(5));
 	ft_close(pipeends, in, out);
 	return (waitpid(childo, &status, 0), waitpid(childt, &status, 0), status);
 }
