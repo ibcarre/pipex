@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: ibaaziz <marvin@42.fr>                     +#+  +:+       +#+         #
+#    By: ibaaziz <ibaaziz@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/01/04 11:17:37 by ibaaziz           #+#    #+#              #
-#    Updated: 2025/01/11 22:20:50 by ibaaziz          ###   ########.fr        #
+#    Updated: 2025/02/24 17:13:38 by ibaaziz          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,6 +15,7 @@ NAME = pipexb
 INC = pipex_b.h\
 
 SRC = ./pipex_b.c\
+	./pipex_b2.c\
 	./ft_split.c\
 	./ft_strjoin.c\
 	./pipex_utils.c\
