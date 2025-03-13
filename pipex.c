@@ -6,7 +6,7 @@
 /*   By: ibaaziz <ibaaziz@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/08 12:21:05 by ibaaziz           #+#    #+#             */
-/*   Updated: 2025/02/24 15:11:02 by ibaaziz          ###   ########.fr       */
+/*   Updated: 2025/03/13 15:15:31 by ibaaziz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,9 +29,10 @@ int	child_in(int in, int pipeEnds[2], char *env[], char **argc)
 		return (handle_err(6), -1);
 	path = findpath(cmd[0], env);
 	if (!path)
-		return (handle_err(6), -1);
+		return (ft_free(cmd), handle_err(6), -1);
 	execve(path, cmd, env);
-	free(path);
+	if (!ft_find(cmd[0], path))
+		free(path);
 	ft_free(cmd);
 	perror("EXECVE FAILED");
 	return (-1);
@@ -54,9 +55,10 @@ int	child_out(int out, int pipeEnds[2], char *env[], char **argc)
 		return (handle_err(6), -1);
 	path = findpath(cmd[0], env);
 	if (!path)
-		return (free(cmd), handle_err(6), -1);
+		return (ft_free(cmd), handle_err(6), -1);
 	execve(path, cmd, env);
-	free(path);
+	if (!ft_find(cmd[0], path))
+		free(path);
 	ft_free(cmd);
 	perror("EXECVE FAILED");
 	return (-1);

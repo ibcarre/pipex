@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   handle_err.c                                       :+:      :+:    :+:   */
+/*   pipex_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ibaaziz <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: ibaaziz <ibaaziz@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/08 12:42:23 by ibaaziz           #+#    #+#             */
-/*   Updated: 2025/01/08 14:13:35 by ibaaziz          ###   ########.fr       */
+/*   Updated: 2025/03/13 15:35:39 by ibaaziz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,8 +62,11 @@ char	*findpath(char *cmd, char *env[])
 {
 	char	**paths;
 	int		i;
+	char	*str;
 	char	*path;
 
+	if (ft_strlen(cmd) == 0 || !cmd)
+		return (NULL);
 	if (access(cmd, F_OK) == 0)
 		return (cmd);
 	paths = ft_getpath(env);
@@ -72,7 +75,9 @@ char	*findpath(char *cmd, char *env[])
 	i = 0;
 	while (paths[i])
 	{
-		path = ft_strjoin(ft_strjoin(paths[i], "/"), cmd);
+		str = ft_strjoin(paths[i], "/");
+		path = ft_strjoin(str, cmd);
+		free(str);
 		if (access(path, F_OK) == 0)
 			return (ft_free(paths), path);
 		free(path);
@@ -91,5 +96,20 @@ void	ft_free(char **lst)
 		free(lst[i]);
 		i++;
 	}
-	free(lst);
+	if (lst)
+		free(lst);
+}
+
+int	ft_find(char *str, char *str2)
+{
+	int	i;
+
+	i = 0;
+	while (str[i])
+	{
+		if (str[i] != str2[i])
+			return (0);
+		i++;
+	}
+	return (1);
 }

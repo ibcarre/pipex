@@ -6,7 +6,7 @@
 /*   By: ibaaziz <ibaaziz@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/08 12:42:23 by ibaaziz           #+#    #+#             */
-/*   Updated: 2025/01/11 19:25:26 by ibaaziz          ###   ########.fr       */
+/*   Updated: 2025/03/05 15:16:49 by ibaaziz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,7 @@ static char	**ft_getpath(char *env[])
 char	*findpath(char *cmd, char *env[])
 {
 	char	**paths;
+	char	*str;
 	int		i;
 	char	*path;
 
@@ -72,7 +73,9 @@ char	*findpath(char *cmd, char *env[])
 	i = 0;
 	while (paths[i])
 	{
-		path = ft_strjoin(ft_strjoin(paths[i], "/"), cmd);
+		str = ft_strjoin(paths[i], "/");
+		path = ft_strjoin(str, cmd);
+		free(str);
 		if (access(path, F_OK) == 0)
 			return (ft_free(paths), path);
 		free(path);

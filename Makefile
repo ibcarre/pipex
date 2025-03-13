@@ -14,14 +14,7 @@ NAME = pipex
 
 INC = pipex.h\
 
-INC_B = pipex_b.h\
-
 SRC = ./pipex.c\
-	./ft_split.c\
-	./ft_strjoin.c\
-	./pipex_utils.c
-
-SRC_BONUS = ./bonus/pipex_b.c\
 	./ft_split.c\
 	./ft_strjoin.c\
 	./pipex_utils.c
